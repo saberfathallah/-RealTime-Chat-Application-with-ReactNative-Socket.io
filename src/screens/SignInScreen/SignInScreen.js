@@ -1,5 +1,5 @@
-import React from "react";
-import { TextInput, Button, Alert, View, StyleSheet } from "react-native";
+import React, { useContext } from "react";
+import { TextInput, Button, View, StyleSheet } from "react-native";
 import * as yup from "yup";
 import { Formik } from "formik";
 
@@ -7,10 +7,10 @@ import ErrorMessage from "@/components/ErrorMessage";
 import {
   MIN_PASSWORD,
   MAX_PASSWORD,
-  PASSWORD_MIN_ERROR_MESSAGE,
   PASSWORD_MAX_ERROR_MESSAGE,
 } from "@/constants/validationForm";
 import { SIGN_UP_ROUTE } from "@/constants/routes";
+import { UserContext } from "@/contexts";
 
 const SignInScreen = ({ navigation }) => {
   const inputStyle = {
@@ -19,6 +19,7 @@ const SignInScreen = ({ navigation }) => {
     padding: 12,
     marginBottom: 5,
   };
+  const { signIn } = useContext(UserContext);
 
   return (
     <View>
@@ -27,12 +28,12 @@ const SignInScreen = ({ navigation }) => {
           email: "",
           password: "",
         }}
-        onSubmit={(values) => Alert.alert(JSON.stringify(values))}
+        onSubmit={(values) => signIn(values)}
         validationSchema={yup.object().shape({
           email: yup.string().email().required(),
           password: yup
             .string()
-            .min(MIN_PASSWORD, PASSWORD_MIN_ERROR_MESSAGE)
+            .min(MIN_PASSWORD)
             .max(MAX_PASSWORD, PASSWORD_MAX_ERROR_MESSAGE)
             .required(),
         })}

@@ -1,5 +1,5 @@
-import React from "react";
-import { TextInput, Button, Alert, ScrollView, StyleSheet } from "react-native";
+import React, { useContext } from "react";
+import { TextInput, Button, ScrollView, StyleSheet } from "react-native";
 import * as yup from "yup";
 import "yup-phone";
 import { Formik } from "formik";
@@ -8,11 +8,11 @@ import ErrorMessage from "@/components/ErrorMessage";
 import {
   MIN_PASSWORD,
   MAX_PASSWORD,
-  PASSWORD_MIN_ERROR_MESSAGE,
   AGE_ERROR_MESSAGE,
   PASSWORD_MAX_ERROR_MESSAGE,
   CONFIRMATION_PASSWORD_ERROR_MESSAGE,
 } from "@/constants/validationForm";
+import { UserContext } from "@/contexts";
 
 const SignUpScreen = () => {
   const inputStyle = {
@@ -21,6 +21,7 @@ const SignUpScreen = () => {
     padding: 12,
     marginBottom: 5,
   };
+  const { signUp } = useContext(UserContext);
 
   return (
     <Formik
@@ -34,7 +35,7 @@ const SignUpScreen = () => {
         passwordConfirmation: "",
         contry: "",
       }}
-      onSubmit={(values) => Alert.alert(JSON.stringify(values))}
+      onSubmit={(values) => signUp(values)}
       validationSchema={yup.object().shape({
         firstName: yup.string().required(),
         lastName: yup.string().required(),
@@ -44,7 +45,7 @@ const SignUpScreen = () => {
         email: yup.string().email().required(),
         password: yup
           .string()
-          .min(MIN_PASSWORD, PASSWORD_MIN_ERROR_MESSAGE)
+          .min(MIN_PASSWORD)
           .max(MAX_PASSWORD, PASSWORD_MAX_ERROR_MESSAGE)
           .required(),
         passwordConfirmation: yup
