@@ -1,0 +1,6 @@
+module Pods_chatFront_chatFrontTests {
+  umbrella header "Pods-chatFront-chatFrontTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,6 @@
+module Pods_chatFront {
+  umbrella header "Pods-chatFront-umbrella.h"
+
+  export *
+  module * { export * }
+}
