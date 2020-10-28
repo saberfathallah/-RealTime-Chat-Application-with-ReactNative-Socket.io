@@ -1,8 +1,7 @@
-import React, { useReducer, useMemo, createContext } from "react";
+import React, { useReducer, useMemo } from "react";
 import AsyncStorage from "@react-native-community/async-storage";
 
-import signInService from "@/services/userServices/signInService";
-import signUpService from "@/services/userServices/signUpService";
+import { signInService, signUpService, getAllUsersService } from "@/services/userServices";
 import { UserContext } from "../index";
 import { setToken } from "@/utils/auth";
 
@@ -23,11 +22,10 @@ const UserProvider = ({ children }) => {
             user: action.user,
           };
 
-        case "SIGN_OUT":
+        case "GET_ALL_USERS":
           return {
             ...prevState,
-            user: {},
-            userToken: null,
+            users: action.users,
           };
       }
     },
@@ -35,6 +33,7 @@ const UserProvider = ({ children }) => {
       userToken: null,
       user: {},
       signup: false,
+      users:[],
     }
   );
 
@@ -69,6 +68,16 @@ const UserProvider = ({ children }) => {
           type: "SIGN_UP",
           token: "dummy-auth-token",
           user: "saber",
+        });
+      },
+      getAllUsers: async () => {
+        console.log("herrrreeeee");
+        const allUsersResponse = await getAllUsersService();
+        console.log("allUsersRessssponse", allUsersResponse);
+
+        dispatch({
+          type: "GET_ALL_USERS",
+          users: allUsersResponse.users,
         });
       },
     }),

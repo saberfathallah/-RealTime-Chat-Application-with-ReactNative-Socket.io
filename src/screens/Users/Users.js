@@ -1,11 +1,24 @@
-import React from "react";
-import { Text } from "react-native";
+import React, { useContext, useEffect } from "react";
 
-const Users = () => (
+import { UserContext } from "@/contexts";
+import UserItem from "@/components/UserItem";
+
+const Users = () => {
+  const {
+    getAllUsers,
+    state: { users },
+  } = useContext(UserContext);
+  console.log("stasssste", users);
+
+  useEffect(() => {
+    getAllUsers();
+  }, []);
+  return (
     <>
-    <Text style={{ fontSize: 12, color: "#FF0D10" }}>
-    Users
-  </Text>
-  </>
-);
+      {users.map((user) => (
+        <UserItem user={user} />
+      ))}
+    </>
+  );
+};
 export default Users;
