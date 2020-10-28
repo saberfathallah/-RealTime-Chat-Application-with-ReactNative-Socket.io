@@ -9,7 +9,7 @@ import {
   MAX_PASSWORD,
   PASSWORD_MAX_ERROR_MESSAGE,
 } from "@/constants/validationForm";
-import { SIGN_UP_ROUTE } from "@/constants/routes";
+import { SIGN_UP_ROUTE, HOME } from "@/constants/routes";
 import { UserContext } from "@/contexts";
 
 const SignInScreen = ({ navigation }) => {
@@ -28,7 +28,10 @@ const SignInScreen = ({ navigation }) => {
           email: "",
           password: "",
         }}
-        onSubmit={(values) => signIn(values)}
+        onSubmit={async values => {
+          await signIn(values);
+          navigation.navigate(HOME);
+        }}
         validationSchema={yup.object().shape({
           email: yup.string().email().required(),
           password: yup

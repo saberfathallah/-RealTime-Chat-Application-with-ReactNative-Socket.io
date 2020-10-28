@@ -41,8 +41,12 @@ const UserProvider = ({ children }) => {
   const userContext = useMemo(
     () => ({
       signIn: async (userInput) => {
+        console.log("userInput", userInput)
         const signInResponse = await signInService(userInput);
+        console.log("signInResponse", signInResponse)
+
         const { accessToken, user } = signInResponse;
+        console.log("user", user)
 
         dispatch({
           type: "SIGN_IN",
