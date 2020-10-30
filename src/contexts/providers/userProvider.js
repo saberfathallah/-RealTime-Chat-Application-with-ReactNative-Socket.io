@@ -1,7 +1,15 @@
 import React, { useReducer, useMemo } from "react";
 import AsyncStorage from "@react-native-community/async-storage";
 
-import { signInService, signUpService, getAllUsersService } from "@/services/userServices";
+import {
+  signInService,
+  signUpService,
+  getAllUsersService,
+} from "@/services/userServices";
+import {
+  getAllInvitationService,
+  getFriendsListService,
+} from "@/services/inviationServices";
 import { UserContext } from "../index";
 import { setToken } from "@/utils/auth";
 
@@ -27,25 +35,29 @@ const UserProvider = ({ children }) => {
             ...prevState,
             users: action.users,
           };
+
+        case "GET_ALL_INVITATIONS":
+          return {
+            ...prevState,
+            invitations: action.invitations,
+          };
       }
     },
     {
       userToken: null,
       user: {},
       signup: false,
-      users:[],
+      users: [],
+      invitations: [],
+      friends: [],
     }
   );
 
   const userContext = useMemo(
     () => ({
       signIn: async (userInput) => {
-        console.log("userInput", userInput)
         const signInResponse = await signInService(userInput);
-        console.log("signInResponse", signInResponse)
-
         const { accessToken, user } = signInResponse;
-        console.log("user", user)
 
         dispatch({
           type: "SIGN_IN",
@@ -53,16 +65,16 @@ const UserProvider = ({ children }) => {
           isFirstSignIn: true,
           user,
         });
-        setToken(accessToken);
+        await setToken(accessToken);
       },
       signOut: async () => {
         await AsyncStorage.clear();
+
         dispatch({ type: "SIGN_OUT" });
       },
 
       signUp: async (userInput) => {
         const signUpResponse = await signUpService(userInput);
-        console.log("signUpResponse", signUpResponse);
 
         dispatch({
           type: "SIGN_UP",
@@ -70,14 +82,31 @@ const UserProvider = ({ children }) => {
           user: "saber",
         });
       },
+
       getAllUsers: async () => {
-        console.log("herrrreeeee");
         const allUsersResponse = await getAllUsersService();
-        console.log("allUsersRessssponse", allUsersResponse);
 
         dispatch({
           type: "GET_ALL_USERS",
           users: allUsersResponse.users,
+        });
+      },
+
+      getAllInvittions: async () => {
+        const allInvitations = await getAllInvitationService();
+
+        dispatch({
+          type: "GET_ALL_INVITATIONS",
+          invitations: allInvitations.invitations,
+        });
+      },
+
+      getFriends: async () => {
+        const friends = await getFriendsListService();
+
+        dispatch({
+          type: "GET_FRIENDS",
+          friends: friends.friends,
         });
       },
     }),

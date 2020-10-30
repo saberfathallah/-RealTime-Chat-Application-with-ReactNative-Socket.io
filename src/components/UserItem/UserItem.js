@@ -1,23 +1,53 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Text, StyleSheet, View, Image, Button } from "react-native";
+import io from "socket.io-client";
 
-const UserItem = ({ user }) => (
-  <View style={styles.row}>
-    <Image
-      style={styles.picture}
-      source={{
-        uri: "https://randomuser.me/api/portraits/thumb/women/21.jpg",
-      }}
-    />
-    <View>
-      <Text style={styles.primaryText}>
-        {user.firstName + " " + user.lastName}
-      </Text>
-      <Text style={styles.secondaryText}>{user.email}</Text>
+import { UserContext } from "@/contexts";
+const ENDPOINT = "http://localhost:4000";
+
+let socket;
+
+const UserItem = ({ user }) => {
+  const {
+    state: { userToken },
+  } = useContext(UserContext);
+
+  useEffect(() => {
+    socket = io(ENDPOINT);
+  }, [ENDPOINT]);
+  useEffect(() => {
+    socket.on("reciveInvitation", (message) => {
+      console.log("messageuseEffect", message);
+    });
+  }, []);
+
+  const sendInvitation = (user) => {
+    socket.emit("sendInvitation", { idInvited: user.id, userToken });
+  };
+
+  return (
+    <View style={styles.row}>
+      <Image
+        style={styles.picture}
+        source={{
+          uri: "https://randomuser.me/api/portraits/thumb/women/21.jpg",
+        }}
+      />
+      <View>
+        <Text style={styles.primaryText}>
+          {user.firstName + " " + user.lastName}
+        </Text>
+        <Text style={styles.secondaryText}>{user.email}</Text>
+      </View>
+      <Button
+        style={styles.button}
+        title="add friend"
+        type="Solid"
+        onPress={() => sendInvitation(user)}
+      />
     </View>
-    <Button style={styles.button} title="add friend" type="Solid" />
-  </View>
-);
+  );
+};
 export default UserItem;
 
 const styles = StyleSheet.create({

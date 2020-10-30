@@ -8,7 +8,6 @@ const Users = () => {
     getAllUsers,
     state: { users },
   } = useContext(UserContext);
-  console.log("stasssste", users);
 
   useEffect(() => {
     getAllUsers();

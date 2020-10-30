@@ -14,7 +14,7 @@ const Stack = createStackNavigator();
 
 const Routes = () => {
   const { state } = useContext(UserContext);
-  console.log("staaa", state);
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
