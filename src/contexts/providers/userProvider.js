@@ -30,6 +30,11 @@ const UserProvider = ({ children }) => {
             user: action.user,
           };
 
+        case "SIGN_OUT":
+          return {
+            ...prevState,
+            userToken: null,
+          };
         case "GET_ALL_USERS":
           return {
             ...prevState,
@@ -42,10 +47,10 @@ const UserProvider = ({ children }) => {
             invitations: action.invitations,
           };
 
-        case "SIGN_OUT":
+        case "SEND_INVIATION":
           return {
             ...prevState,
-            userToken: null,
+            invitations: [...prevState.invitations, action.newInvitation],
           };
       }
     },
@@ -104,6 +109,13 @@ const UserProvider = ({ children }) => {
         dispatch({
           type: "GET_ALL_INVITATIONS",
           invitations: allInvitations.invitations,
+        });
+      },
+
+      sendInvitation: async (newInvitation) => {
+        dispatch({
+          type: "SEND_INVIATION",
+          newInvitation: newInvitation,
         });
       },
 

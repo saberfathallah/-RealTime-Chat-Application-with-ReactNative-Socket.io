@@ -5,23 +5,15 @@ import io from "socket.io-client";
 import { UserContext } from "@/contexts";
 const ENDPOINT = "http://localhost:4000";
 
-let socket;
-
 const UserItem = ({ user }) => {
   const {
     state: { userToken },
   } = useContext(UserContext);
 
-  useEffect(() => {
-    socket = io(ENDPOINT);
-  }, [ENDPOINT]);
-  useEffect(() => {
-    socket.on("reciveInvitation", (message) => {
-      console.log("messageuseEffect", message);
-    });
-  }, []);
-
   const sendInvitation = (user) => {
+    let socket;
+    socket = io(`${ENDPOINT}?idInvited=${user.id}`);
+
     socket.emit("sendInvitation", { idInvited: user.id, userToken });
   };
 

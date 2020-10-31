@@ -9,17 +9,10 @@ const Invitations = () => {
 
   const onChangeSearch = (query) => setSearchQuery(query);
   const {
-    getAllInvittions,
     state: { invitations },
   } = useContext(UserContext);
+console.log("invitations", invitations);
 
-  updateSearch = (search) => {
-    this.setState({ search });
-  };
-
-  useEffect(() => {
-    getAllInvittions();
-  }, []);
 
   return (
     <>
@@ -33,7 +26,7 @@ const Invitations = () => {
 
       <View>
         {invitations.map(
-          ({ idInvited: { id, lastName, firstName, email } }) => (
+          ({ userSendInvitation: { id, lastName, firstName, email } }) => (
             <ListItem key={id} bottomDivider>
               <Avatar
                 source={{
