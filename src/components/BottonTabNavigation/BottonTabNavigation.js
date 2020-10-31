@@ -7,12 +7,14 @@ import Invitations from "@/screens/Invitations";
 import Messages from "@/screens/Messages";
 import { FRIENDS, USERS, INVITATIONS, MESSAGES } from "@/constants/routes";
 import HeaderComponent from "@/components/Header";
+
 const Tab = createBottomTabNavigator();
 
-const BottomTabNavigation = () => {
+const BottomTabNavigation = ({ navigation }) => {
+
   return (
     <>
-      <HeaderComponent />
+      <HeaderComponent navigation={navigation} />
       <Tab.Navigator
         tabBarOptions={{
           style: {

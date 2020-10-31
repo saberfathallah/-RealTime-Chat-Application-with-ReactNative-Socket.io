@@ -2,12 +2,15 @@ import React, { useContext, useEffect } from "react";
 import { Header, Badge } from "react-native-elements";
 import { Text } from "react-native";
 import io from "socket.io-client";
+import { withInAppNotification } from "react-native-in-app-notification";
 
 import { UserContext } from "@/contexts";
+import { INVITATIONS } from "@/constants/routes";
+
 const ENDPOINT = "http://localhost:4000";
 let socket;
 
-const HeaderComponent = () => {
+const HeaderComponent = ({ navigation, showNotification }) => {
   const {
     state: { user, invitations },
     signOut,
@@ -26,6 +29,16 @@ const HeaderComponent = () => {
   useEffect(() => {
     socket.on("reciveInvitation", (newInvitation) => {
       sendInvitation(newInvitation);
+
+      const {
+        userSendInvitation: { firstName, lastName },
+      } = newInvitation;
+      showNotification({
+        title: "new Invitation",
+        message: `new Invitation from ${firstName} ${lastName}`,
+        onPress: () => navigation.navigate(INVITATIONS),
+        additionalProps: { type: "error" },
+      });
     });
   }, []);
 
@@ -42,4 +55,4 @@ const HeaderComponent = () => {
     </>
   );
 };
-export default HeaderComponent;
+export default withInAppNotification(HeaderComponent);

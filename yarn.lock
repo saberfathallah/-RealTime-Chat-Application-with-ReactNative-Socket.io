@@ -3860,7 +3860,7 @@ hoist-non-react-statics@^2.3.1:
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
   integrity sha512-rqcy4pJo55FTTLWt+bU8ukscqHeE/e9KWvsOW2b/a3afxQZhwkQdT1rPPCJ0rYXdj4vNcasY8zHTH+jF/qStxw==
 
-hoist-non-react-statics@^3.3.0, hoist-non-react-statics@^3.3.2:
+hoist-non-react-statics@^3.0.1, hoist-non-react-statics@^3.3.0, hoist-non-react-statics@^3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz#ece0acaf71d62c2969c2ec59feff42a4b1a85b45"
   integrity sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==
@@ -6571,6 +6571,14 @@ react-native-elements@^3.0.0-alpha.1:
     react-native-size-matters "^0.3.1"
     react-native-status-bar-height "^2.5.0"
 
+react-native-flash-message@^0.1.16:
+  version "0.1.16"
+  resolved "https://registry.yarnpkg.com/react-native-flash-message/-/react-native-flash-message-0.1.16.tgz#4f23c8c60927ed3c325d90f1a4c1bbe0923a4ba6"
+  integrity sha512-d+c6zWQDNvnZ5S0BDa10yB/0/rLMXTtYYjIOyad0Y+/G6h289qB1Hyc9twgvrpv/fEaKW+m5vxCBGHustII+rA==
+  dependencies:
+    prop-types "^15.7.2"
+    react-native-iphone-x-helper "^1.2.1"
+
 react-native-gesture-handler@^1.8.0:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.8.0.tgz#18f61f51da50320f938957b0ee79bc58f47449dc"
@@ -6581,7 +6589,16 @@ react-native-gesture-handler@^1.8.0:
     invariant "^2.2.4"
     prop-types "^15.7.2"
 
-react-native-iphone-x-helper@^1.3.0:
+react-native-in-app-notification@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-in-app-notification/-/react-native-in-app-notification-3.1.0.tgz#2396c1acd677b1bd73d32911acec47d4a842d90f"
+  integrity sha512-ughONPDR4FpjvZPClyHX5DLbPtmKnVaHfMz2nEPw0H/TqIjV63F07O+zOhg/MWop2YFOOuCuuHbqJnF1hywnBQ==
+  dependencies:
+    hoist-non-react-statics "^3.0.1"
+    react-native-iphone-x-helper "^1.2.0"
+    react-native-swipe-gestures "^1.0.2"
+
+react-native-iphone-x-helper@^1.2.0, react-native-iphone-x-helper@^1.2.1, react-native-iphone-x-helper@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.3.0.tgz#84fd13e6b89cc3aa4daa80ec514bf15cb724d86d"
   integrity sha512-+/bcZWFeZt0xSS/+3CHM5K7qPL4vDO/3ARLIowzFpUPGZiPsv9+NET+XNqqseRYwFJwYMmtX+Q4TZKxAVy09ew==
@@ -6594,6 +6611,13 @@ react-native-paper@^4.3.0:
     "@callstack/react-theme-provider" "^3.0.5"
     color "^3.1.2"
     react-native-safe-area-view "^0.14.9"
+
+react-native-push-notification-popup@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/react-native-push-notification-popup/-/react-native-push-notification-popup-1.6.0.tgz#bbca3e68cf62cd5d47d718dd6d1f1e8e01f562f9"
+  integrity sha512-QBWDXzhxgegck3PQxop7/xo34k8CkU51y+uHujXVpx/GjpUeEA9gh8W2aFULslkp1T7fq1YSCpWXkQxieKweqA==
+  dependencies:
+    prop-types "^15.7.2"
 
 react-native-ratings@^7.3.0:
   version "7.3.0"
@@ -6646,6 +6670,11 @@ react-native-status-bar-height@^2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/react-native-status-bar-height/-/react-native-status-bar-height-2.5.0.tgz#bc0fb85230603850aab9667ee8111a62954de90c"
   integrity sha512-sYBCPYA/NapBSHkdm/IVL4ID3LLlIuLqINi2FBDyMkc2BU9pfSGOtkz9yfxoK39mYJuTrlTOQ7mManARUsYDSA==
+
+react-native-swipe-gestures@^1.0.2:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/react-native-swipe-gestures/-/react-native-swipe-gestures-1.0.5.tgz#a172cb0f3e7478ccd681fd36b8bfbcdd098bde7c"
+  integrity sha512-Ns7Bn9H/Tyw278+5SQx9oAblDZ7JixyzeOczcBK8dipQk2pD7Djkcfnf1nB/8RErAmMLL9iXgW0QHqiII8AhKw==
 
 react-native-tab-view@^2.15.2:
   version "2.15.2"
@@ -8401,6 +8430,11 @@ yargs@^15.0.2, yargs@^15.1.0, yargs@^15.4.1:
     which-module "^2.0.0"
     y18n "^4.0.0"
     yargs-parser "^18.1.2"
+
+yarn@^1.22.10:
+  version "1.22.10"
+  resolved "https://registry.yarnpkg.com/yarn/-/yarn-1.22.10.tgz#c99daa06257c80f8fa2c3f1490724e394c26b18c"
+  integrity sha512-IanQGI9RRPAN87VGTF7zs2uxkSyQSrSPsju0COgbsKQOOXr5LtcVPeyXWgwVa0ywG3d8dg6kSYKGBuYK021qeA==
 
 yeast@0.1.2:
   version "0.1.2"
