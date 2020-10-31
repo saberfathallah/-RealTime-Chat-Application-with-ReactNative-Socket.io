@@ -1,5 +1,7 @@
 import React, { useContext } from "react";
-import { TextInput, Button, View, StyleSheet } from "react-native";
+import { TextInput, View, StyleSheet, Text } from "react-native";
+import { Button } from "react-native-elements";
+
 import * as yup from "yup";
 import { Formik } from "formik";
 
@@ -13,12 +15,6 @@ import { SIGN_UP_ROUTE, HOME } from "@/constants/routes";
 import { UserContext } from "@/contexts";
 
 const SignInScreen = ({ navigation }) => {
-  const inputStyle = {
-    borderWidth: 1,
-    borderColor: "#4e4e4e",
-    padding: 12,
-    marginBottom: 5,
-  };
   const { signIn } = useContext(UserContext);
 
   return (
@@ -28,7 +24,7 @@ const SignInScreen = ({ navigation }) => {
           email: "",
           password: "",
         }}
-        onSubmit={async values => {
+        onSubmit={async (values) => {
           await signIn(values);
           navigation.navigate(HOME);
         }}
@@ -51,30 +47,35 @@ const SignInScreen = ({ navigation }) => {
           handleSubmit,
         }) => (
           <View style={styles.formContainer}>
-            <TextInput
-              value={values.email}
-              style={inputStyle}
-              onChangeText={handleChange("email")}
-              onBlur={() => setFieldTouched("email")}
-              placeholder="E-mail"
-            />
-            {touched.email && errors.email && (
-              <ErrorMessage error={errors.email} />
-            )}
-            <TextInput
-              value={values.password}
-              style={inputStyle}
-              onChangeText={handleChange("password")}
-              placeholder="Password"
-              onBlur={() => setFieldTouched("password")}
-              secureTextEntry={true}
-            />
+            <Text style={styles.title}>Login</Text>
+            <View style={styles.inputContainer}>
+              <TextInput
+                value={values.email}
+                style={styles.inputStyle}
+                onChangeText={handleChange("email")}
+                onBlur={() => setFieldTouched("email")}
+                placeholder="E-mail"
+              />
+              {touched.email && errors.email && (
+                <ErrorMessage error={errors.email} />
+              )}
+            </View>
+            <View style={styles.inputContainer}>
+              <TextInput
+                value={values.password}
+                style={styles.inputStyle}
+                onChangeText={handleChange("password")}
+                placeholder="Password"
+                onBlur={() => setFieldTouched("password")}
+                secureTextEntry={true}
+              />
 
-            {touched.password && errors.password && (
-              <ErrorMessage error={errors.password} />
-            )}
+              {touched.password && errors.password && (
+                <ErrorMessage error={errors.password} />
+              )}
+            </View>
+
             <Button
-              color="#3740FE"
               title="sign in"
               disabled={!isValid}
               onPress={handleSubmit}
@@ -82,17 +83,34 @@ const SignInScreen = ({ navigation }) => {
           </View>
         )}
       </Formik>
-      <Button
-        title="sign up"
+      <Text
+        style={styles.signUpText}
         onPress={() => navigation.navigate(SIGN_UP_ROUTE)}
-      />
+      >
+        sign up
+      </Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   formContainer: {
-    padding: 50,
+    padding: 20,
+  },
+  signUpText: {
+    color: "#09B7F8",
+    textAlign: "center",
+    fontSize: 25,
+  },
+  inputStyle: {
+    borderWidth: 1,
+    borderColor: "#09B7F8",
+    padding: 12,
+    marginBottom: 8,
+  },
+  title: { textAlign: "center", marginBottom: 15, fontSize: 30 },
+  inputContainer: {
+    marginBottom: 15,
   },
 });
 

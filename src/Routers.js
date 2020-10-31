@@ -5,8 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import SignInScreen from "@/screens/SignInScreen";
 import SignUpScreen from "@/screens/SignUpScreen";
-import Friends from "@/screens/Friends";
-import { SIGN_IN_ROUTE, SIGN_UP_ROUTE, FRIENDS, HOME } from "@/constants/routes";
+import { SIGN_IN_ROUTE, SIGN_UP_ROUTE, HOME } from "@/constants/routes";
 import BottomTabNavigation from "@/components/BottonTabNavigation";
 import { UserContext } from "@/contexts";
 
@@ -24,7 +23,6 @@ const Routes = () => {
           <>
             <Stack.Screen name={SIGN_IN_ROUTE} component={SignInScreen} />
             <Stack.Screen name={SIGN_UP_ROUTE} component={SignUpScreen} />
-            <Stack.Screen name={FRIENDS} component={Friends} />
           </>
         )}
       </Stack.Navigator>

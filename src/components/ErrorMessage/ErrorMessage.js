@@ -2,7 +2,7 @@ import React from "react";
 import { Text } from "react-native";
 
 const ErrorMessage = ({ error }) => (
-    <Text style={{ fontSize: 12, color: "#FF0D10" }}>
+  <Text style={{ color: "#FF0D10", textAlign: "center" }}>
     {error}
   </Text>
 );

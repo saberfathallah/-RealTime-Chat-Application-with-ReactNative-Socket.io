@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
-import { TextInput, Button, ScrollView, StyleSheet } from "react-native";
+import { TextInput, ScrollView, StyleSheet, Text, View } from "react-native";
 import * as yup from "yup";
 import "yup-phone";
 import { Formik } from "formik";
+import { Button } from "react-native-elements";
 
 import ErrorMessage from "@/components/ErrorMessage";
 import {
@@ -15,12 +16,6 @@ import {
 import { UserContext } from "@/contexts";
 
 const SignUpScreen = () => {
-  const inputStyle = {
-    borderWidth: 1,
-    borderColor: "#4e4e4e",
-    padding: 12,
-    marginBottom: 5,
-  };
   const { signUp } = useContext(UserContext);
 
   return (
@@ -66,86 +61,103 @@ const SignUpScreen = () => {
         handleSubmit,
       }) => (
         <ScrollView style={styles.formContainer}>
-          <TextInput
-            value={values.firstName}
-            style={inputStyle}
-            onChangeText={handleChange("firstName")}
-            onBlur={() => setFieldTouched("firstName")}
-            placeholder="first name"
-          />
-          {touched.firstName && errors.firstName && (
-            <ErrorMessage error={errors.firstName} />
-          )}
-          <TextInput
-            value={values.lastName}
-            style={inputStyle}
-            onChangeText={handleChange("lastName")}
-            onBlur={() => setFieldTouched("lastName")}
-            placeholder="last name"
-          />
-          {touched.lastName && errors.lastName && (
-            <ErrorMessage error={errors.lastName} />
-          )}
-          <TextInput
-            value={values.age}
-            style={inputStyle}
-            onChangeText={handleChange("age")}
-            onBlur={() => setFieldTouched("age")}
-            placeholder="age"
-          />
-          {touched.age && errors.age && <ErrorMessage error={errors.age} />}
-          <TextInput
-            value={values.phoneNumber}
-            style={inputStyle}
-            onChangeText={handleChange("phoneNumber")}
-            onBlur={() => setFieldTouched("phoneNumber")}
-            placeholder="phone number"
-          />
-          {touched.phoneNumber && errors.phoneNumber && (
-            <ErrorMessage error={errors.phoneNumber} />
-          )}
-          <TextInput
-            value={values.contry}
-            style={inputStyle}
-            onChangeText={handleChange("contry")}
-            onBlur={() => setFieldTouched("contry")}
-            placeholder="contry"
-          />
-          {touched.contry && errors.contry && (
-            <ErrorMessage error={errors.contry} />
-          )}
-          <TextInput
-            value={values.email}
-            style={inputStyle}
-            onChangeText={handleChange("email")}
-            onBlur={() => setFieldTouched("email")}
-            placeholder="E-mail"
-          />
-          {touched.email && errors.email && (
-            <ErrorMessage error={errors.email} />
-          )}
-          <TextInput
-            value={values.password}
-            style={inputStyle}
-            onChangeText={handleChange("password")}
-            placeholder="Password"
-            onBlur={() => setFieldTouched("password")}
-            secureTextEntry={true}
-          />
-          {touched.password && errors.password && (
-            <ErrorMessage error={errors.password} />
-          )}
-          <TextInput
-            value={values.passwordConfirmation}
-            style={inputStyle}
-            onChangeText={handleChange("passwordConfirmation")}
-            placeholder="passwordConfirmation"
-            onBlur={() => setFieldTouched("passwordConfirmation")}
-            secureTextEntry={true}
-          />
-          {touched.passwordConfirmation && errors.passwordConfirmation && (
-            <ErrorMessage error={errors.passwordConfirmation} />
-          )}
+          <Text style={styles.title}>Inscription</Text>
+          <View style={styles.inputContainer}>
+            <TextInput
+              value={values.firstName}
+              style={styles.inputStyle}
+              onChangeText={handleChange("firstName")}
+              onBlur={() => setFieldTouched("firstName")}
+              placeholder="first name"
+            />
+            {touched.firstName && errors.firstName && (
+              <ErrorMessage error={errors.firstName} />
+            )}
+          </View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              value={values.lastName}
+              style={styles.inputStyle}
+              onChangeText={handleChange("lastName")}
+              onBlur={() => setFieldTouched("lastName")}
+              placeholder="last name"
+            />
+            {touched.lastName && errors.lastName && (
+              <ErrorMessage error={errors.lastName} />
+            )}
+          </View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              value={values.age}
+              style={styles.inputStyle}
+              onChangeText={handleChange("age")}
+              onBlur={() => setFieldTouched("age")}
+              placeholder="age"
+            />
+            {touched.age && errors.age && <ErrorMessage error={errors.age} />}
+          </View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              value={values.phoneNumber}
+              style={styles.inputStyle}
+              onChangeText={handleChange("phoneNumber")}
+              onBlur={() => setFieldTouched("phoneNumber")}
+              placeholder="phone number"
+            />
+            {touched.phoneNumber && errors.phoneNumber && (
+              <ErrorMessage error={errors.phoneNumber} />
+            )}
+          </View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              value={values.contry}
+              style={styles.inputStyle}
+              onChangeText={handleChange("contry")}
+              onBlur={() => setFieldTouched("contry")}
+              placeholder="contry"
+            />
+            {touched.contry && errors.contry && (
+              <ErrorMessage error={errors.contry} />
+            )}
+          </View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              value={values.email}
+              style={styles.inputStyle}
+              onChangeText={handleChange("email")}
+              onBlur={() => setFieldTouched("email")}
+              placeholder="E-mail"
+            />
+            {touched.email && errors.email && (
+              <ErrorMessage error={errors.email} />
+            )}
+          </View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              value={values.password}
+              style={styles.inputStyle}
+              onChangeText={handleChange("password")}
+              placeholder="Password"
+              onBlur={() => setFieldTouched("password")}
+              secureTextEntry={true}
+            />
+            {touched.password && errors.password && (
+              <ErrorMessage error={errors.password} />
+            )}
+          </View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              value={values.passwordConfirmation}
+              style={styles.inputStyle}
+              onChangeText={handleChange("passwordConfirmation")}
+              placeholder="passwordConfirmation"
+              onBlur={() => setFieldTouched("passwordConfirmation")}
+              secureTextEntry={true}
+            />
+            {touched.passwordConfirmation && errors.passwordConfirmation && (
+              <ErrorMessage error={errors.passwordConfirmation} />
+            )}
+          </View>
           <Button
             color="#3740FE"
             title="sign up"
@@ -160,7 +172,17 @@ const SignUpScreen = () => {
 
 const styles = StyleSheet.create({
   formContainer: {
-    padding: 50,
+    padding: 20,
+  },
+  inputStyle: {
+    borderWidth: 1,
+    borderColor: "#09B7F8",
+    padding: 12,
+    marginBottom: 8,
+  },
+  title: { textAlign: "center", marginBottom: 15, fontSize: 30 },
+  inputContainer: {
+    marginBottom: 15,
   },
 });
 

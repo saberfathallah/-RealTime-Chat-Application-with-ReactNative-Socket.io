@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from "react";
+import { View } from "react-native";
 
 import { UserContext } from "@/contexts";
 import UserItem from "@/components/UserItem";
@@ -15,7 +16,7 @@ const Users = () => {
   return (
     <>
       {users.map((user) => (
-        <UserItem user={user} />
+        <View key={user.id}><UserItem user={user} /></View>
       ))}
     </>
   );

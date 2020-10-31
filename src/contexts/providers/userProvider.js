@@ -41,6 +41,12 @@ const UserProvider = ({ children }) => {
             ...prevState,
             invitations: action.invitations,
           };
+
+        case "SIGN_OUT":
+          return {
+            ...prevState,
+            userToken: null,
+          };
       }
     },
     {
