@@ -11,8 +11,6 @@ const Invitations = () => {
   const {
     state: { invitations },
   } = useContext(UserContext);
-console.log("invitations", invitations);
-
 
   return (
     <>
