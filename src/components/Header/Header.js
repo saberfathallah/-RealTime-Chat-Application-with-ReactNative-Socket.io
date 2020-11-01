@@ -14,8 +14,10 @@ const HeaderComponent = ({ navigation, showNotification }) => {
   const {
     state: { user, invitations },
     signOut,
-    sendInvitation,
+    reciveSendInvitation,
     annulateInvitation,
+    reciveAcceptInvitation,
+    reciveRefuseInvitation,
   } = useContext(UserContext);
 
   useEffect(() => {
@@ -23,8 +25,43 @@ const HeaderComponent = ({ navigation, showNotification }) => {
   }, [ENDPOINT, user.id]);
 
   useEffect(() => {
+    socket.on("reciveAcceptInvitation", (invitation) => {
+      reciveAcceptInvitation(invitation);
+
+      const {
+        user: { firstName, lastName },
+      } = invitation;
+      showNotification({
+        title: "Accept Invitation",
+        message: `${firstName} ${lastName} Accept your invitation`,
+        onPress: () => navigation.navigate(INVITATIONS),
+        additionalProps: { type: "error" },
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    socket.on("reciveRefuseInvitation", (newInvitation) => {
+      reciveRefuseInvitation(
+        newInvitation.user.idSend,
+        newInvitation.idInvited
+      );
+
+      const {
+        user: { firstName, lastName },
+      } = newInvitation;
+      showNotification({
+        title: "Refuse Invitation",
+        message: `${firstName} ${lastName} refuse your invitation`,
+        onPress: () => navigation.navigate(INVITATIONS),
+        additionalProps: { type: "error" },
+      });
+    });
+  }, []);
+
+  useEffect(() => {
     socket.on("reciveInvitation", (newInvitation) => {
-      sendInvitation(newInvitation);
+      reciveSendInvitation(newInvitation);
 
       const {
         userSendInvitation: { firstName, lastName },

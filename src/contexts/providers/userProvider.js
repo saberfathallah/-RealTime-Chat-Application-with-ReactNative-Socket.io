@@ -54,12 +54,38 @@ const UserProvider = ({ children }) => {
         case "SEND_INVIATION":
           return {
             ...prevState,
-            invitations: [...prevState.invitations, action.newInvitation],
             listSendInvitation: [
               ...prevState.listSendInvitation,
               action.newInvitation,
             ],
           };
+
+        case "RECIVE_SEND_INVIATION":
+          return {
+            ...prevState,
+            invitations: [...prevState.invitations, action.newInvitation],
+          };
+
+        case "ACCEPT_INVITATION":
+          return {
+            ...prevState,
+            invitations: prevState.invitations.filter(
+              (invitation) =>
+                invitation.idInvited !== action.invitation.idInvited &&
+                invitation.userSendInvitation.id === action.invitation.user.id
+            ),
+            friends: [...prevState.friends, action.invitation.user],
+          };
+
+        case "RECIVE_ACCEPT_INVIATION":
+          return {
+            ...prevState,
+            listSendInvitation: prevState.listSendInvitation.filter(
+              (invitation) => invitation.idInvited !== action.invitation.user.id
+            ),
+            friends: [...prevState.friends, action.invitation.user],
+          };
+
         case "ANNULATE_INVIATION":
           return {
             ...prevState,
@@ -68,6 +94,26 @@ const UserProvider = ({ children }) => {
             ),
             listSendInvitation: prevState.listSendInvitation.filter(
               (invitation) => invitation.idInvited !== action.idInvited
+            ),
+          };
+
+        case "REFUSE_INVIATION":
+          return {
+            ...prevState,
+            invitations: prevState.invitations.filter(
+              (invitation) =>
+                invitation.idInvited !== action.idInvited &&
+                invitation.userSendInvitation.id === action.idSend
+            ),
+          };
+
+        case "RECIVE_REFUSE_INVIATION":
+          return {
+            ...prevState,
+            listSendInvitation: prevState.listSendInvitation.filter(
+              (invitation) =>
+                invitation.idInvited !== action.idInvited &&
+                invitation.userSendInvitation.id === action.idSend
             ),
           };
       }
@@ -143,9 +189,46 @@ const UserProvider = ({ children }) => {
         });
       },
 
+      reciveSendInvitation: async (newInvitation) => {
+        dispatch({
+          type: "RECIVE_SEND_INVIATION",
+          newInvitation: newInvitation,
+        });
+      },
+
       annulateInvitation: async (idInvited) => {
         dispatch({
           type: "ANNULATE_INVIATION",
+          idInvited,
+        });
+      },
+
+      acceptInvitation: async (invitation) => {
+        dispatch({
+          type: "ACCEPT_INVITATION",
+          invitation,
+        });
+      },
+
+      reciveAcceptInvitation: async (invitation) => {
+        dispatch({
+          type: "RECIVE_ACCEPT_INVIATION",
+          invitation,
+        });
+      },
+
+      refuseInvitation: async (idSend, idInvited) => {
+        dispatch({
+          type: "REFUSE_INVIATION",
+          idSend,
+          idInvited,
+        });
+      },
+
+      reciveRefuseInvitation: async (idSend, idInvited) => {
+        dispatch({
+          type: "RECIVE_REFUSE_INVIATION",
+          idSend,
           idInvited,
         });
       },

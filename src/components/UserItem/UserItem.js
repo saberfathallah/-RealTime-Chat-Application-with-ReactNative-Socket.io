@@ -7,6 +7,7 @@ import {
   isInvitedFunction,
   isSendInvitationFunction,
 } from "@/helpers/invitations";
+import AcceptOrRefuseInvitationButton from "@/components/AcceptOrRefuseInvitationButton";
 
 const UserItem = ({ user }) => {
   const {
@@ -36,7 +37,7 @@ const UserItem = ({ user }) => {
         <Text style={styles.secondaryText}>{user.email}</Text>
       </View>
       {isSendInvitation ? (
-        <Text style={styles.primaryText}>accept or remove</Text>
+        <AcceptOrRefuseInvitationButton user={user} />
       ) : (
         <SendOrAnnulateInvitaionButton user={user} isInvited={isInvited} />
       )}
