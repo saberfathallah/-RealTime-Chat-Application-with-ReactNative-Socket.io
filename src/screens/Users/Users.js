@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { View } from "react-native";
+import { View, ScrollView } from "react-native";
 
 import { UserContext } from "@/contexts";
 import UserItem from "@/components/UserItem";
@@ -14,11 +14,13 @@ const Users = () => {
     getAllUsers();
   }, []);
   return (
-    <>
+    <ScrollView>
       {users.map((user) => (
-        <View key={user.id}><UserItem user={user} /></View>
+        <View key={user.id}>
+          <UserItem user={user} />
+        </View>
       ))}
-    </>
+    </ScrollView>
   );
 };
 export default Users;

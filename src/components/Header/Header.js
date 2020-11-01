@@ -14,13 +14,9 @@ const HeaderComponent = ({ navigation, showNotification }) => {
   const {
     state: { user, invitations },
     signOut,
-    getAllInvittions,
     sendInvitation,
+    annulateInvitation,
   } = useContext(UserContext);
-
-  useEffect(() => {
-    getAllInvittions();
-  }, []);
 
   useEffect(() => {
     socket = io(`${ENDPOINT}?idInvited=${user.id}`);
@@ -36,6 +32,19 @@ const HeaderComponent = ({ navigation, showNotification }) => {
       showNotification({
         title: "new Invitation",
         message: `new Invitation from ${firstName} ${lastName}`,
+        onPress: () => navigation.navigate(INVITATIONS),
+        additionalProps: { type: "error" },
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    socket.on("reciveAnnulateInvitation", (annulateInvitationData) => {
+      const { idInvited, firstName, lastName } = annulateInvitationData;
+      annulateInvitation(idInvited);
+      showNotification({
+        title: "Annulate Invitation",
+        message: `${firstName} ${lastName} canceled his invitation`,
         onPress: () => navigation.navigate(INVITATIONS),
         additionalProps: { type: "error" },
       });

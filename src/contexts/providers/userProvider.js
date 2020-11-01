@@ -9,6 +9,7 @@ import {
 import {
   getAllInvitationService,
   getFriendsListService,
+  getListUserInvited,
 } from "@/services/inviationServices";
 import { UserContext } from "../index";
 import { setToken } from "@/utils/auth";
@@ -28,6 +29,9 @@ const UserProvider = ({ children }) => {
             ...prevState,
             userToken: action.token,
             user: action.user,
+            invitations: action.invitations,
+            friends: action.friends,
+            listSendInvitation: action.listSendInvitation,
           };
 
         case "SIGN_OUT":
@@ -51,6 +55,20 @@ const UserProvider = ({ children }) => {
           return {
             ...prevState,
             invitations: [...prevState.invitations, action.newInvitation],
+            listSendInvitation: [
+              ...prevState.listSendInvitation,
+              action.newInvitation,
+            ],
+          };
+        case "ANNULATE_INVIATION":
+          return {
+            ...prevState,
+            invitations: prevState.invitations.filter(
+              (invitation) => invitation.idInvited !== action.idInvited
+            ),
+            listSendInvitation: prevState.listSendInvitation.filter(
+              (invitation) => invitation.idInvited !== action.idInvited
+            ),
           };
       }
     },
@@ -61,6 +79,7 @@ const UserProvider = ({ children }) => {
       users: [],
       invitations: [],
       friends: [],
+      listSendInvitation: [],
     }
   );
 
@@ -69,14 +88,19 @@ const UserProvider = ({ children }) => {
       signIn: async (userInput) => {
         const signInResponse = await signInService(userInput);
         const { accessToken, user } = signInResponse;
+        await setToken(accessToken);
+        const { invitations } = await getAllInvitationService();
+        const { listUserInvited } = await getListUserInvited();
+        const { friends } = await getFriendsListService();
 
         dispatch({
           type: "SIGN_IN",
           token: accessToken,
-          isFirstSignIn: true,
           user,
+          invitations,
+          friends,
+          listSendInvitation: listUserInvited,
         });
-        await setToken(accessToken);
       },
       signOut: async () => {
         await AsyncStorage.clear();
@@ -103,19 +127,26 @@ const UserProvider = ({ children }) => {
         });
       },
 
-      getAllInvittions: async () => {
-        const allInvitations = await getAllInvitationService();
+      // getAllInvittions: async () => {
+      //   const allInvitations = await getAllInvitationService();
 
-        dispatch({
-          type: "GET_ALL_INVITATIONS",
-          invitations: allInvitations.invitations,
-        });
-      },
+      //   dispatch({
+      //     type: "GET_ALL_INVITATIONS",
+      //     invitations: allInvitations.invitations,
+      //   });
+      // },
 
       sendInvitation: async (newInvitation) => {
         dispatch({
           type: "SEND_INVIATION",
           newInvitation: newInvitation,
+        });
+      },
+
+      annulateInvitation: async (idInvited) => {
+        dispatch({
+          type: "ANNULATE_INVIATION",
+          idInvited,
         });
       },
 

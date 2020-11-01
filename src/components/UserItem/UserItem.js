@@ -1,21 +1,25 @@
-import React, { useContext, useEffect } from "react";
-import { Text, StyleSheet, View, Image, Button } from "react-native";
-import io from "socket.io-client";
+import React, { useContext, useMemo } from "react";
+import { Text, StyleSheet, View, Image } from "react-native";
 
+import SendOrAnnulateInvitaionButton from "@/components/SendOrAnnulateInvitaionButton";
 import { UserContext } from "@/contexts";
-const ENDPOINT = "http://localhost:4000";
+import {
+  isInvitedFunction,
+  isSendInvitationFunction,
+} from "@/helpers/invitations";
 
 const UserItem = ({ user }) => {
   const {
-    state: { userToken },
+    state: { invitations, listSendInvitation, user: userConnected },
   } = useContext(UserContext);
-
-  const sendInvitation = (user) => {
-    let socket;
-    socket = io(`${ENDPOINT}?idInvited=${user.id}`);
-
-    socket.emit("sendInvitation", { idInvited: user.id, userToken });
-  };
+  const isSendInvitation = useMemo(
+    () => isSendInvitationFunction(invitations, user),
+    [invitations, user]
+  );
+  const isInvited = useMemo(() => isInvitedFunction(listSendInvitation, user), [
+    listSendInvitation,
+    user,
+  ]);
 
   return (
     <View style={styles.row}>
@@ -31,12 +35,11 @@ const UserItem = ({ user }) => {
         </Text>
         <Text style={styles.secondaryText}>{user.email}</Text>
       </View>
-      <Button
-        style={styles.button}
-        title="add friend"
-        type="Solid"
-        onPress={() => sendInvitation(user)}
-      />
+      {isSendInvitation ? (
+        <Text style={styles.primaryText}>accept or remove</Text>
+      ) : (
+        <SendOrAnnulateInvitaionButton user={user} isInvited={isInvited} />
+      )}
     </View>
   );
 };
