@@ -19,13 +19,13 @@ const UserItem = ({ user }) => {
     [invitations, user]
   );
 
-  const isInvited = useMemo(() => isInvitedFunction(friends, user), [
+  const isInvited = useMemo(() => isInvitedFunction(listSendInvitation, user), [
     listSendInvitation,
     user,
   ]);
 
   const isFriend = useMemo(() => isFriendFunction(friends, user), [
-    listSendInvitation,
+    friends,
     user,
   ]);
 

@@ -81,7 +81,7 @@ const UserProvider = ({ children }) => {
           return {
             ...prevState,
             listSendInvitation: prevState.listSendInvitation.filter(
-              (invitation) => invitation.idInvited !== action.invitation.user.id
+              (invitation) => invitation.idInvited !== action.invitation.idSend
             ),
             friends: [...prevState.friends, action.invitation.user],
           };
