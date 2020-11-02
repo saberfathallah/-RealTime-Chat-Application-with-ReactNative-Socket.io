@@ -6,18 +6,25 @@ import { UserContext } from "@/contexts";
 import {
   isInvitedFunction,
   isSendInvitationFunction,
+  isFriendFunction,
 } from "@/helpers/invitations";
 import AcceptOrRefuseInvitationButton from "@/components/AcceptOrRefuseInvitationButton";
 
 const UserItem = ({ user }) => {
   const {
-    state: { invitations, listSendInvitation, user: userConnected },
+    state: { invitations, listSendInvitation, friends },
   } = useContext(UserContext);
   const isSendInvitation = useMemo(
     () => isSendInvitationFunction(invitations, user),
     [invitations, user]
   );
-  const isInvited = useMemo(() => isInvitedFunction(listSendInvitation, user), [
+
+  const isInvited = useMemo(() => isInvitedFunction(friends, user), [
+    listSendInvitation,
+    user,
+  ]);
+
+  const isFriend = useMemo(() => isFriendFunction(friends, user), [
     listSendInvitation,
     user,
   ]);
@@ -36,10 +43,17 @@ const UserItem = ({ user }) => {
         </Text>
         <Text style={styles.secondaryText}>{user.email}</Text>
       </View>
-      {isSendInvitation ? (
-        <AcceptOrRefuseInvitationButton user={user} />
+
+      {isFriend ? (
+        <Text style={styles.primaryText}>friend</Text>
       ) : (
-        <SendOrAnnulateInvitaionButton user={user} isInvited={isInvited} />
+        <View>
+          {isSendInvitation ? (
+            <AcceptOrRefuseInvitationButton user={user} />
+          ) : (
+            <SendOrAnnulateInvitaionButton user={user} isInvited={isInvited} />
+          )}
+        </View>
       )}
     </View>
   );
