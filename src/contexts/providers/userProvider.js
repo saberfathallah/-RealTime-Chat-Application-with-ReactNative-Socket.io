@@ -116,6 +116,14 @@ const UserProvider = ({ children }) => {
                 invitation.userSendInvitation.id === action.idSend
             ),
           };
+
+        case "REMOVE_FRIEND":
+          return {
+            ...prevState,
+            friends: prevState.friends.filter(
+              (friend) => friend.id !== action.friendId
+            ),
+          };
       }
     },
     {
@@ -230,6 +238,13 @@ const UserProvider = ({ children }) => {
           type: "RECIVE_REFUSE_INVIATION",
           idSend,
           idInvited,
+        });
+      },
+
+      removeFriend: async (friendId) => {
+        dispatch({
+          type: "REMOVE_FRIEND",
+          friendId,
         });
       },
 

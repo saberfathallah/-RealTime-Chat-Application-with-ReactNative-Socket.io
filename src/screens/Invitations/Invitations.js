@@ -3,6 +3,7 @@ import { View, TextInput, StyleSheet } from "react-native";
 import { ListItem, Avatar, Button } from "react-native-elements";
 
 import { UserContext } from "@/contexts";
+import AcceptOrRefuseInvitationButton from "@/components/AcceptOrRefuseInvitationButton";
 
 const Invitations = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -24,7 +25,7 @@ const Invitations = () => {
 
       <View>
         {invitations.map(
-          ({ userSendInvitation: { id, lastName, firstName, email } }) => (
+          ({ userSendInvitation: { id, lastName, firstName, email }, userSendInvitation }) => (
             <ListItem key={id} bottomDivider>
               <Avatar
                 source={{
@@ -38,7 +39,7 @@ const Invitations = () => {
                 </ListItem.Title>
                 <ListItem.Subtitle>{email}</ListItem.Subtitle>
               </ListItem.Content>
-              <Button title="Accept" type="outline" />
+              <AcceptOrRefuseInvitationButton user={userSendInvitation} />
             </ListItem>
           )
         )}

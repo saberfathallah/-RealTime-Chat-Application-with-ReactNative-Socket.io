@@ -1,16 +1,28 @@
 import React, { useContext, useState } from "react";
-import { View, TextInput, StyleSheet } from "react-native";
-import { ListItem, Avatar, Button } from "react-native-elements";
+import { View, TextInput, StyleSheet, Button } from "react-native";
+import { ListItem, Avatar } from "react-native-elements";
+import io from "socket.io-client";
 
 import { UserContext } from "@/contexts";
+const ENDPOINT = "http://localhost:4000";
 
 const Friends = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const onChangeSearch = (query) => setSearchQuery(query);
   const {
-    state: { friends },
+    state: { friends, user: userConnected, userToken },
+    removeFriend,
   } = useContext(UserContext);
+  console.log("friends", friends)
+
+  const removeFriendFunction = (user) => {
+    let socket;
+    socket = io(`${ENDPOINT}?idInvited=${user.id}`);
+
+    socket.emit("removeFriend", { idFriend: user.id, userToken });
+    removeFriend(user.id);
+  };
 
   return (
     <>
@@ -37,7 +49,7 @@ const Friends = () => {
               </ListItem.Title>
               <ListItem.Subtitle>{email}</ListItem.Subtitle>
             </ListItem.Content>
-            <Button title="Accept" type="outline" />
+            <Button color="red" title="Remove friend" onPress={() => removeFriendFunction({ id, lastName, firstName, email })} />
           </ListItem>
         ))}
       </View>

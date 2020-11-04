@@ -9,6 +9,7 @@ import {
   reciveAcceptInvitationHook,
   reciveAnnulateInvitationHook,
   reciveRefuseInvitationHook,
+  reciveRemoveFriendHook,
 } from "@/hooks/invitation";
 
 const HeaderComponent = ({ navigation, showNotification }) => {
@@ -19,6 +20,7 @@ const HeaderComponent = ({ navigation, showNotification }) => {
     annulateInvitation,
     reciveAcceptInvitation,
     reciveRefuseInvitation,
+    removeFriend,
   } = useContext(UserContext);
 
   reciveRefuseInvitationHook(
@@ -49,6 +51,13 @@ const HeaderComponent = ({ navigation, showNotification }) => {
     user
   );
 
+  reciveRemoveFriendHook(
+    navigation,
+    showNotification,
+    removeFriend,
+    user
+  );
+  
   return (
     <>
       <Header
