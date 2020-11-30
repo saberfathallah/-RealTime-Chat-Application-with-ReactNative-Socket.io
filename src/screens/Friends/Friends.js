@@ -4,17 +4,17 @@ import { ListItem, Avatar } from "react-native-elements";
 import io from "socket.io-client";
 
 import { UserContext } from "@/contexts";
+import { CONVERSATION } from "../../constants/routes";
 const ENDPOINT = "http://localhost:4000";
 
-const Friends = () => {
+const Friends = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const onChangeSearch = (query) => setSearchQuery(query);
   const {
-    state: { friends, user: userConnected, userToken },
+    state: { friends, userToken },
     removeFriend,
   } = useContext(UserContext);
-  console.log("friends", friends)
 
   const removeFriendFunction = (user) => {
     let socket;
@@ -38,6 +38,7 @@ const Friends = () => {
         {friends.map(({ id, lastName, firstName, email }) => (
           <ListItem key={id} bottomDivider>
             <Avatar
+              onPress={() => navigation.navigate(CONVERSATION, { userId: id })}
               source={{
                 uri:
                   "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg",
@@ -49,7 +50,13 @@ const Friends = () => {
               </ListItem.Title>
               <ListItem.Subtitle>{email}</ListItem.Subtitle>
             </ListItem.Content>
-            <Button color="red" title="Remove friend" onPress={() => removeFriendFunction({ id, lastName, firstName, email })} />
+            <Button
+              color="red"
+              title="Remove friend"
+              onPress={() =>
+                removeFriendFunction({ id, lastName, firstName, email })
+              }
+            />
           </ListItem>
         ))}
       </View>

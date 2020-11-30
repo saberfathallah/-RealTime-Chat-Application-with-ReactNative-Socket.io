@@ -5,3 +5,4 @@ export const USERS = "USERS";
 export const HOME = "HOME";
 export const INVITATIONS = "INVITATIONS";
 export const MESSAGES = "MESSAGES";
+export const CONVERSATION = "CONVERSATION";

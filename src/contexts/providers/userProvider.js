@@ -1,6 +1,6 @@
 import React, { useReducer, useMemo } from "react";
 import AsyncStorage from "@react-native-community/async-storage";
-
+import { formatSendMessage } from "@/helpers/messages";
 import {
   signInService,
   signUpService,
@@ -11,6 +11,7 @@ import {
   getFriendsListService,
   getListUserInvited,
 } from "@/services/inviationServices";
+import { getAllConversationsService } from "@/services/conversationServices";
 import { UserContext } from "../index";
 import { setToken } from "@/utils/auth";
 
@@ -32,6 +33,7 @@ const UserProvider = ({ children }) => {
             invitations: action.invitations,
             friends: action.friends,
             listSendInvitation: action.listSendInvitation,
+            conversations: action.conversations,
           };
 
         case "SIGN_OUT":
@@ -124,6 +126,25 @@ const UserProvider = ({ children }) => {
               (friend) => friend.id !== action.friendId
             ),
           };
+        case "SEND_MESSAGE":
+          return {
+            ...prevState,
+            conversations: formatSendMessage(
+              prevState.conversations,
+              action.message,
+              action.message.userId
+            ),
+          };
+
+        case "RECIVE_MESSAGE":
+          return {
+            ...prevState,
+            conversations: formatSendMessage(
+              prevState.conversations,
+              action.message,
+              action.message.id
+            ),
+          };
       }
     },
     {
@@ -134,6 +155,7 @@ const UserProvider = ({ children }) => {
       invitations: [],
       friends: [],
       listSendInvitation: [],
+      conversations: [],
     }
   );
 
@@ -146,6 +168,7 @@ const UserProvider = ({ children }) => {
         const { invitations } = await getAllInvitationService();
         const { listUserInvited } = await getListUserInvited();
         const { friends } = await getFriendsListService();
+        const { conversations } = await getAllConversationsService();
 
         dispatch({
           type: "SIGN_IN",
@@ -154,6 +177,7 @@ const UserProvider = ({ children }) => {
           invitations,
           friends,
           listSendInvitation: listUserInvited,
+          conversations,
         });
       },
       signOut: async () => {
@@ -180,15 +204,6 @@ const UserProvider = ({ children }) => {
           users: allUsersResponse.users,
         });
       },
-
-      // getAllInvittions: async () => {
-      //   const allInvitations = await getAllInvitationService();
-
-      //   dispatch({
-      //     type: "GET_ALL_INVITATIONS",
-      //     invitations: allInvitations.invitations,
-      //   });
-      // },
 
       sendInvitation: async (newInvitation) => {
         dispatch({
@@ -254,6 +269,19 @@ const UserProvider = ({ children }) => {
         dispatch({
           type: "GET_FRIENDS",
           friends: friends.friends,
+        });
+      },
+      reciveMessage: async (message) => {
+        dispatch({
+          type: "RECIVE_MESSAGE",
+          message,
+        });
+      },
+
+      sendMessage: async (message) => {
+        dispatch({
+          type: "SEND_MESSAGE",
+          message,
         });
       },
     }),
