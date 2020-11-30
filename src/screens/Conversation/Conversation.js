@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from "react";
+import React, { useCallback, useContext, useMemo } from "react";
 import { GiftedChat } from "react-native-gifted-chat";
 import io from "socket.io-client";
 
@@ -11,7 +11,10 @@ export default function Conversation({ route }) {
     sendMessage,
   } = useContext(UserContext);
 
-  const conversation = getSortConversation(conversations, route.params.userId);
+  const conversation = useMemo(
+    () => getSortConversation(conversations, route.params.userId),
+    [conversations, route.params.userId]
+  );
 
   const onSend = useCallback((messages = []) => {
     const {
