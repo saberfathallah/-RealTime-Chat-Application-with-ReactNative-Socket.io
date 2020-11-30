@@ -3,31 +3,21 @@ import { GiftedChat } from "react-native-gifted-chat";
 import io from "socket.io-client";
 
 import { UserContext } from "@/contexts";
+import { getSortConversation } from "@/helpers/messages";
 
 export default function Conversation({ route }) {
   const {
     state: { userToken, conversations, user },
     sendMessage,
   } = useContext(UserContext);
-  const conversation = conversations.filter(
-    (conversation) => conversation.user.id === route.params.userId
-  );
 
-  const covvv =
-    conversation[0] &&
-    conversation[0].conversation &&
-    conversation[0].conversation.length > 0
-      ? conversation[0].conversation.sort(function (a, b) {
-          return new Date(b.createdAt) - new Date(a.createdAt);
-        })
-      : [];
+  const conversation = getSortConversation(conversations, route.params.userId);
 
   const onSend = useCallback((messages = []) => {
     const {
       params: { userId },
     } = route;
     const createdAt = new Date();
-
     let socket;
     const ENDPOINT = "http://localhost:4000";
 
@@ -39,7 +29,7 @@ export default function Conversation({ route }) {
       createdAt,
     });
 
-    GiftedChat.append(covvv, messages);
+    GiftedChat.append(conversation, messages);
 
     sendMessage({
       text: messages[0].text,
@@ -52,7 +42,7 @@ export default function Conversation({ route }) {
 
   return (
     <GiftedChat
-      messages={covvv}
+      messages={conversation}
       onSend={(messages) => onSend(messages)}
       user={{
         _id: user.id,

@@ -42,3 +42,19 @@ export const formatSendMessage = (conversations, message, id) =>
           ],
         },
       ];
+
+export const getSortConversation = (conversations, userId) => {
+  const conversation = conversations.filter(
+    (conversation) => conversation.user.id === userId
+  );
+  const sortedConversation =
+    conversation[0] &&
+    conversation[0].conversation &&
+    conversation[0].conversation.length > 0
+      ? conversation[0].conversation.sort(function (a, b) {
+          return new Date(b.createdAt) - new Date(a.createdAt);
+        })
+      : [];
+
+  return sortedConversation;
+};
