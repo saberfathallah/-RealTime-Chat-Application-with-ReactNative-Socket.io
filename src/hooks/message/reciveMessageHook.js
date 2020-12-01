@@ -25,7 +25,7 @@ const reciveMessageHook = (
         onPress: () => navigation.navigate(CONVERSATION, { userId: id }),
         additionalProps: { type: "error" },
       });
-      reciveMessage(message);
+      reciveMessage({ ...message, userConnectedId: user.id, userId: id });
     });
   }, []);
 };

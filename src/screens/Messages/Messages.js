@@ -33,7 +33,7 @@ const Messages = ({ navigation }) => {
             <ListItem.Subtitle>{user.email}</ListItem.Subtitle>
           </ListItem.Content>
           <Text style={{ fontSize: 12, color: "#FF0D10" }}>
-            {conversation[conversation.length - 1].text}
+            {conversation[0].text}
           </Text>
         </ListItem>
       ))}

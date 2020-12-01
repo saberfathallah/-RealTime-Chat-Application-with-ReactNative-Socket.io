@@ -142,7 +142,8 @@ const UserProvider = ({ children }) => {
             conversations: formatSendMessage(
               prevState.conversations,
               action.message,
-              action.message.id
+              action.message.userId,
+              true
             ),
           };
       }
@@ -162,8 +163,6 @@ const UserProvider = ({ children }) => {
   const userContext = useMemo(
     () => ({
       signIn: async (userInput) => {
-        var date1 = new Date().getTime();
-
         const signInResponse = await signInService(userInput);
         const { accessToken, user } = signInResponse;
         await setToken(accessToken);
@@ -180,8 +179,6 @@ const UserProvider = ({ children }) => {
           getAllConversationsService(),
         ]);
 
-        var date2 = new Date().getTime();
-        console.log("date2date2date2date2date2date2", date2 - date1);
         dispatch({
           type: "SIGN_IN",
           token: accessToken,

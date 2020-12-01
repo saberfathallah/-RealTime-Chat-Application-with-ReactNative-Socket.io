@@ -11,37 +11,37 @@ export default function Conversation({ route }) {
     state: { userToken, conversations, user },
     sendMessage,
   } = useContext(UserContext);
-
+  const userId = route.params.userId;
   const conversation = useMemo(
-    () => getSortConversation(conversations, route.params.userId),
-    [conversations, route.params.userId]
+    () => getSortConversation(conversations, userId),
+    [conversations, userId]
   );
 
-  const onSend = useCallback((messages = []) => {
-    const {
-      params: { userId },
-    } = route;
-    const createdAt = new Date();
-    let socket;
+  const onSend = useCallback(
+    (messages = []) => {
+      const createdAt = new Date();
+      let socket;
+      socket = io(`${API_URL}?id=${userId}`);
 
-    socket = io(`${API_URL}?id=${userId}`);
-    socket.emit("sendMessage", {
-      userId,
-      text: messages[0].text,
-      userToken,
-      createdAt,
-    });
+      socket.emit("sendMessage", {
+        userId,
+        text: messages[0].text,
+        userToken,
+        createdAt,
+      });
 
-    GiftedChat.append(conversation, messages);
+      GiftedChat.append(conversation, messages);
 
-    sendMessage({
-      text: messages[0].text,
-      createdAt,
-      userId,
-      id: user.id,
-      firstName: user.firstName,
-    });
-  }, []);
+      sendMessage({
+        text: messages[0].text,
+        createdAt,
+        userId,
+        userConnectedId: user.id,
+        firstName: user.firstName,
+      });
+    },
+    [userId]
+  );
 
   return (
     <GiftedChat
