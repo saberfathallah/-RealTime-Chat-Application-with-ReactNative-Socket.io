@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import io from "socket.io-client";
-import { CONVERSATION } from "@/constants/routes";
+import { API_URL } from "@env";
 
-const ENDPOINT = "http://localhost:4000";
+import { CONVERSATION } from "@/constants/routes";
 let socket;
 
 const reciveMessageHook = (
@@ -12,8 +12,8 @@ const reciveMessageHook = (
   user
 ) => {
   useEffect(() => {
-    socket = io(`${ENDPOINT}?idInvited=${user.id}`);
-  }, [ENDPOINT, user.id]);
+    socket = io(`${API_URL}?id=${user.id}`);
+  }, [API_URL, user.id]);
 
   useEffect(() => {
     socket.on("reciveMessage", (message) => {

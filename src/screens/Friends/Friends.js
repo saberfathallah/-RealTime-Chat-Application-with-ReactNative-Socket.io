@@ -2,10 +2,10 @@ import React, { useContext, useState } from "react";
 import { View, TextInput, StyleSheet, Button } from "react-native";
 import { ListItem, Avatar } from "react-native-elements";
 import io from "socket.io-client";
+import { API_URL } from "@env";
 
 import { UserContext } from "@/contexts";
 import { CONVERSATION } from "../../constants/routes";
-const ENDPOINT = "http://localhost:4000";
 
 const Friends = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -18,7 +18,7 @@ const Friends = ({ navigation }) => {
 
   const removeFriendFunction = (user) => {
     let socket;
-    socket = io(`${ENDPOINT}?idInvited=${user.id}`);
+    socket = io(`${API_URL}?id=${user.id}`);
 
     socket.emit("removeFriend", { idFriend: user.id, userToken });
     removeFriend(user.id);

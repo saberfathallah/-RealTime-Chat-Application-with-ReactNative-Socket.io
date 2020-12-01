@@ -2,9 +2,9 @@ import React, { useContext } from "react";
 import { View, StyleSheet } from "react-native";
 import io from "socket.io-client";
 import { Button } from "react-native-elements";
+import { API_URL } from "@env";
 
 import { UserContext } from "@/contexts";
-const ENDPOINT = "http://localhost:4000";
 
 const SendOrAnnulateInvitaionButton = ({ user, isInvited }) => {
   const {
@@ -15,7 +15,7 @@ const SendOrAnnulateInvitaionButton = ({ user, isInvited }) => {
 
   const sentOrAnnulateInvitation = (user, isInvited) => {
     let socket;
-    socket = io(`${ENDPOINT}?idInvited=${user.id}`);
+    socket = io(`${API_URL}?id=${user.id}`);
     if (isInvited) {
       socket.emit("annulateInvitation", { idInvited: user.id, userToken });
       annulateInvitation(user.id);

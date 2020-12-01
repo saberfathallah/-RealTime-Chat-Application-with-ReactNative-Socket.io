@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import io from "socket.io-client";
+import { API_URL } from "@env";
 
-const ENDPOINT = "http://localhost:4000";
 let socket;
 
 const reciveAnnulateInvitationHook = (
@@ -11,8 +11,8 @@ const reciveAnnulateInvitationHook = (
   user
 ) => {
   useEffect(() => {
-    socket = io(`${ENDPOINT}?idInvited=${user.id}`);
-  }, [ENDPOINT, user.id]);
+    socket = io(`${API_URL}?id=${user.id}`);
+  }, [API_URL, user.id]);
 
   useEffect(() => {
     socket.on("reciveAnnulateInvitation", (annulateInvitationData) => {

@@ -2,9 +2,9 @@ import React, { useContext } from "react";
 import { View, StyleSheet } from "react-native";
 import io from "socket.io-client";
 import { Button } from "react-native-elements";
+import { API_URL } from "@env";
 
 import { UserContext } from "@/contexts";
-const ENDPOINT = "http://localhost:4000";
 
 const AcceptOrRefuseInvitationButton = ({ user }) => {
   const {
@@ -15,7 +15,7 @@ const AcceptOrRefuseInvitationButton = ({ user }) => {
 
   const acceptInvitationFunction = (user) => {
     let socket;
-    socket = io(`${ENDPOINT}?idInvited=${user.id}`);
+    socket = io(`${API_URL}?id=${user.id}`);
 
     socket.emit("acceptInvitation", { idSend: user.id, userToken });
     acceptInvitation({ user, idInvited: userConnected.id });
@@ -23,7 +23,7 @@ const AcceptOrRefuseInvitationButton = ({ user }) => {
 
   const refuseInvitationFunction = (user) => {
     let socket;
-    socket = io(`${ENDPOINT}?idInvited=${user.id}`);
+    socket = io(`${API_URL}?id=${user.id}`);
 
     socket.emit("refuseInvitation", { idSend: user.id, userToken });
     refuseInvitation(user.id, userConnected.id);

@@ -1,6 +1,7 @@
 import React, { useCallback, useContext, useMemo } from "react";
 import { GiftedChat } from "react-native-gifted-chat";
 import io from "socket.io-client";
+import { API_URL } from "@env";
 
 import { UserContext } from "@/contexts";
 import { getSortConversation } from "@/helpers/messages";
@@ -22,9 +23,8 @@ export default function Conversation({ route }) {
     } = route;
     const createdAt = new Date();
     let socket;
-    const ENDPOINT = "http://localhost:4000";
 
-    socket = io(`${ENDPOINT}?idInvited=${userId}`);
+    socket = io(`${API_URL}?id=${userId}`);
     socket.emit("sendMessage", {
       userId,
       text: messages[0].text,

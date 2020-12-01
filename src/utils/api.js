@@ -1,9 +1,10 @@
 import axios from "axios";
+import { API_URL } from "@env";
 
 import { getToken } from "./auth";
 
 const api = axios.create({
-  baseURL: "http://localhost:4000",
+  baseURL: API_URL,
 });
 
 api.interceptors.request.use(async (config) => {
