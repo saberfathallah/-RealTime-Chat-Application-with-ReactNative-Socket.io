@@ -1,34 +1,12 @@
-import React, { useContext } from "react";
+import React from "react";
 import { View, StyleSheet } from "react-native";
-import io from "socket.io-client";
 import { Button } from "react-native-elements";
-import { API_URL } from "@env";
 
-import { UserContext } from "@/contexts";
-
-const AcceptOrRefuseInvitationButton = ({ user }) => {
-  const {
-    state: { userToken, user: userConnected },
-    acceptInvitation,
-    refuseInvitation,
-  } = useContext(UserContext);
-
-  const acceptInvitationFunction = (user) => {
-    let socket;
-    socket = io(`${API_URL}?id=${user.id}`);
-
-    socket.emit("acceptInvitation", { idSend: user.id, userToken });
-    acceptInvitation({ user, idInvited: userConnected.id });
-  };
-
-  const refuseInvitationFunction = (user) => {
-    let socket;
-    socket = io(`${API_URL}?id=${user.id}`);
-
-    socket.emit("refuseInvitation", { idSend: user.id, userToken });
-    refuseInvitation(user.id, userConnected.id);
-  };
-
+const AcceptOrRefuseInvitationButton = ({
+  user,
+  acceptInvitationFunction,
+  refuseInvitationFunction,
+}) => {
   return (
     <View style={styles.row}>
       <Button
