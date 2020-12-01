@@ -25,7 +25,7 @@ const reciveAcceptInvitationHook = (
       showNotification({
         title: "Accept Invitation",
         message: `${firstName} ${lastName} Accept your invitation`,
-        onPress: () => navigation.navigate(INVITATIONS),
+        onPress: () => navigation.navigate(INVITATIONS), // navigate to profil
         additionalProps: { type: "error" },
       });
     });

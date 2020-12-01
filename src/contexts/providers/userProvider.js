@@ -162,14 +162,26 @@ const UserProvider = ({ children }) => {
   const userContext = useMemo(
     () => ({
       signIn: async (userInput) => {
+        var date1 = new Date().getTime();
+
         const signInResponse = await signInService(userInput);
         const { accessToken, user } = signInResponse;
         await setToken(accessToken);
-        const { invitations } = await getAllInvitationService();
-        const { listUserInvited } = await getListUserInvited();
-        const { friends } = await getFriendsListService();
-        const { conversations } = await getAllConversationsService();
 
+        const [
+          { invitations },
+          { listUserInvited },
+          { friends },
+          { conversations },
+        ] = await Promise.all([
+          getAllInvitationService(),
+          getListUserInvited(),
+          getFriendsListService(),
+          getAllConversationsService(),
+        ]);
+
+        var date2 = new Date().getTime();
+        console.log("date2date2date2date2date2date2", date2 - date1);
         dispatch({
           type: "SIGN_IN",
           token: accessToken,

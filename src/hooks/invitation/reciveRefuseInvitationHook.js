@@ -28,7 +28,7 @@ const reciveRefuseInvitationHook = (
       showNotification({
         title: "Refuse Invitation",
         message: `${firstName} ${lastName} refuse your invitation`,
-        onPress: () => navigation.navigate(INVITATIONS),
+        onPress: () => navigation.navigate(INVITATIONS), // navigate to profil
         additionalProps: { type: "error" },
       });
     });

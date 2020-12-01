@@ -22,7 +22,7 @@ const reciveAnnulateInvitationHook = (
       showNotification({
         title: "Annulate Invitation",
         message: `${firstName} ${lastName} canceled his invitation`,
-        onPress: () => navigation.navigate(INVITATIONS),
+        onPress: () => navigation.navigate(INVITATIONS), // navigate to profil
         additionalProps: { type: "error" },
       });
     });
